@@ -54,28 +54,46 @@ namespace Task03
     {
         static void Main(string[] args)
         {
-            int N
+            int N = 0;
             List<ComputerInfo> computerInfoList = new List<ComputerInfo>();
             try
             {
-                N = 
-                
+                N = int.Parse(Console.ReadLine());
                 for (int i = 0; i < N; i++)
                 {
-                    
+                    string[] str = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    computerInfoList.Add(new ComputerInfo { Owner = str[0], ComputerManufacturer = new Manufacturer(str[2], str[1]) });
                 }
             }
-           
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentNullException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.GetType().Name);
+            }
+
 
             // выполните сортировку одним выражением
-            var computerInfoQuery = from 
+            var computerInfoQuery = from ci in computerInfoList
+                                    orderby ci.Owner, ci.ComputerManufacturer.name, ci.ComputerManufacturer.date descending
+                                    select ci;
 
             PrintCollectionInOneLine(computerInfoQuery);
 
             Console.WriteLine();
 
             // выполните сортировку одним выражением
-            var computerInfoMethods = computerInfoList.
+            var computerInfoMethods = computerInfoList.OrderByDescending(x => x.Owner).ThenBy(x => x.ComputerManufacturer.name).ThenByDescending(x => x.ComputerManufacturer.date);
 
             PrintCollectionInOneLine(computerInfoMethods);
             
@@ -84,14 +102,30 @@ namespace Task03
         // выведите элементы коллекции на экран с помощью кода, состоящего из одной линии (должна быть одна точка с запятой)
         public static void PrintCollectionInOneLine(IEnumerable<ComputerInfo> collection)
         {
+            Console.WriteLine(collection.Select(x => x.ToString()).Aggregate((x, y) => x + "\n" + y));
         }
     }
 
+    class Manufacturer
+    {
+        public string name { get; set; }
+        public string date { get; set; }
+
+        public Manufacturer(string name, string date)
+        {
+            this.name = name == "0" ? "Dell" : name == "1" ? "Asus" : name == "2" ? "Apple" : "Microsoft";
+            this.date = "[" + date + "]";
+        }
+    }
 
     class ComputerInfo
     {
         public string Owner { get; set; }
         public Manufacturer ComputerManufacturer { get; set; }
-        
+
+        public override string ToString()
+        {
+            return Owner + ": " + ComputerManufacturer.name + " " + ComputerManufacturer.date;
+        }
     }
 }

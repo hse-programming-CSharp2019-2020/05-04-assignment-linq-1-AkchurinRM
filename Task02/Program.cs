@@ -38,27 +38,58 @@ namespace Task02
 
         public static void RunTesk02()
         {
-            int[] arr;
+            int[] arr = null;
+            string[] arr_str = null;
             try
             {
-                // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
-                arr = 
+                arr_str = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).TakeWhile(x => x != "0").ToArray();
+                arr = arr_str.Select(x => int.Parse(x)).ToArray();
+                // был вариант с
+                // bool flag = true;
+                // arr = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => (int)Math.Pow(int.Parse(x), 2)).Where(x => { flag = x != 0; return flag; }).ToArray();
+                if (arr is null) throw new InvalidOperationException();
+
             }
-            
-            
-            var filteredCollection = arr.
-           
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
+                return;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+                return;
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+                return;
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+                return;
+            }
+
             try
             {
-                
+                var filteredCollection = arr.Select(x => (int)Math.Pow(x, 2)).ToArray();
+
                 // использовать статическую форму вызова метода подсчета среднего
-                double averageUsingStaticForm = 
+                double averageUsingStaticForm = Enumerable.Average(filteredCollection);
                 // использовать объектную форму вызова метода подсчета среднего
-                double averageUsingInstanceForm = 
+                double averageUsingInstanceForm = filteredCollection.Average();
 
 
                 // вывести элементы коллекции в одну строку
-                filteredCollection.
+                Console.WriteLine(averageUsingStaticForm.ToString("N3"));
+                Console.WriteLine(averageUsingInstanceForm.ToString("N3"));
+
+                Console.WriteLine(arr.Select(x => (x).ToString()).Aggregate((x,y) => x + " " + y));
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
             }
           
         }

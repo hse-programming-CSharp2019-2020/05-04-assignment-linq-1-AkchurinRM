@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,9 +32,10 @@ using System.Threading.Tasks;
  */
 
 namespace Task01
-{
+{ 
     class Program
     {
+
         static void Main(string[] args)
         {
             RunTesk01();
@@ -41,23 +43,60 @@ namespace Task01
 
         public static void RunTesk01()
         {
-            int[] arr;
+            int[] arr = null;
             try
             {
                 // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
-                arr = 
+                arr = Console.ReadLine().Split(new char[] { ' '}, StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToArray();
+                if (arr is null) throw new InvalidOperationException();
             }
-            
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
+                return;
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine("ArgumentNullException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+                return;
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+                return;
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+                return;
+            }
+
             // использовать синтаксис запросов!
-            IEnumerable<int> arrQuery = from 
+            IEnumerable<int> arrQuery = 
+                from x in arr
+                where x % 2 == 0 || x < 0
+                select x;
 
             // использовать синтаксис методов!
-            IEnumerable<int> arrMethod = arr.
+            IEnumerable<int> arrMethod = arr.Where(x => x % 2 == 0 || x < 0);
 
             try
             {
                 PrintEnumerableCollection<int>(arrQuery, ":");
                 PrintEnumerableCollection<int>(arrMethod, "*");
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+                return;
+            }
+            catch (ArgumentNullException)
+            {
+                Console.WriteLine("ArgumentNullException");
             }
         }
 
@@ -65,8 +104,8 @@ namespace Task01
         // P.S. Есть два способа, оставьте тот, в котором применяется LINQ...
         public static void PrintEnumerableCollection<T>(IEnumerable<T> collection, string separator)
         {
-           
-           
+            if (collection is null) throw new InvalidOperationException();
+            Console.WriteLine(collection.Select(x => x.ToString()).Aggregate((x,y) => x + separator + y));
         }
     }
 }
