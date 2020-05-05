@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 /*
  * На вход подается строка, состоящая из целых чисел типа int, разделенных одним или несколькими пробелами.
@@ -39,30 +40,53 @@ namespace Task04
 
         public static void RunTesk04()
         {
-            int[] arr;
+            int[] arr = null;
+
             try
             {
-                // Попробуйте осуществить считывание целочисленного массива, записав это ОДНИМ ВЫРАЖЕНИЕМ.
-                arr = 
+                arr = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToArray();
             }
-           
-                // использовать синтаксис методов! SQL-подобные запросы не писать!
-               
-                int arrAggregate = arr.
+            catch (FormatException)
+            {
+                Console.WriteLine("FormatException");
+            }
+            catch (OverflowException)
+            {
+                Console.WriteLine("OverflowException");
+            }
+            catch (InvalidOperationException)
+            {
+                Console.WriteLine("InvalidOperationException");
+            }
+            catch (ArgumentException)
+            {
+                Console.WriteLine("ArgumentException");
+            }
 
-                int arrMyAggregate = MyClass.MyAggregate(arr);
+            // использовать синтаксис методов! SQL-подобные запросы не писать!
 
-                Console.WriteLine(arrAggregate);
-                Console.WriteLine(arrMyAggregate);
+            int i = 1;
+            int arrAggregate = 5 + arr.Aggregate((x,y) => x + y * (int)Math.Pow(-1, i++));
+
+            int arrMyAggregate = MyClass.MyAggregate(arr);
+
+            Console.WriteLine(arrAggregate);
+            Console.WriteLine(arrMyAggregate);
            
         }
     }
 
     static class MyClass
     {
-        public static int MyAggregate()
+        public static int MyAggregate(int[] arr)
         {
+            int res = 5;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                res += arr[i] * (int)Math.Pow(-1, i);
+            }
             
+            return res;
         }
     }
 }

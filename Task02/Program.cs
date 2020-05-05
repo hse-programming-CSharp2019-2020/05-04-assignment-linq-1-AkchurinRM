@@ -41,60 +41,69 @@ namespace Task02
 
         public static void RunTesk02()
         {
-            int[] arr = null;
-            string[] arr_str = null;
-            try
+            checked
             {
-                arr_str = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).TakeWhile(x => x != "0").ToArray();
-                arr = arr_str.Select(x => int.Parse(x)).ToArray();
-                // был вариант с
-                // bool flag = true;
-                // arr = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => (int)Math.Pow(int.Parse(x), 2)).Where(x => { flag = x != 0; return flag; }).ToArray();
-                if (arr is null) throw new InvalidOperationException();
+                try
+                {
+                    int[] arr = null;
+                    string[] arr_str = null;
+                    try
+                    {
+                        arr_str = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).TakeWhile(x => x != "0").ToArray();
+                        arr = arr_str.Select(x => int.Parse(x)).ToArray();
+                        // был вариант с
+                        // bool flag = true;
+                        // arr = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => (int)Math.Pow(int.Parse(x), 2)).Where(x => { flag = x != 0; return flag; }).ToArray();
+                        if (arr is null) throw new InvalidOperationException();
 
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("ArgumentException");
-                return;
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("FormatException");
-                return;
-            }
-            catch (OverflowException)
-            {
-                Console.WriteLine("OverflowException");
-                return;
-            }
-            catch (InvalidOperationException)
-            {
-                Console.WriteLine("InvalidOperationException");
-                return;
-            }
+                    }
+                    catch (ArgumentException)
+                    {
+                        Console.WriteLine("ArgumentException");
+                        return;
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("FormatException");
+                        return;
+                    }
+                    catch (OverflowException)
+                    {
+                        Console.WriteLine("OverflowException");
+                        return;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        Console.WriteLine("InvalidOperationException");
+                        return;
+                    }
 
-            try
-            {
-                var filteredCollection = arr.Select(x => (int)Math.Pow(x, 2)).ToArray();
+                    try
+                    {
+                        var filteredCollection = arr.Select(x => (int)Math.Pow(x, 2)).ToArray();
 
-                // использовать статическую форму вызова метода подсчета среднего
-                double averageUsingStaticForm = Enumerable.Average(filteredCollection);
-                // использовать объектную форму вызова метода подсчета среднего
-                double averageUsingInstanceForm = filteredCollection.Average();
+                        // использовать статическую форму вызова метода подсчета среднего
+                        double averageUsingStaticForm = Enumerable.Average(filteredCollection);
+                        // использовать объектную форму вызова метода подсчета среднего
+                        double averageUsingInstanceForm = filteredCollection.Average();
 
 
-                // вывести элементы коллекции в одну строку
-                Console.WriteLine(averageUsingStaticForm.ToString("N3"));
-                Console.WriteLine(averageUsingInstanceForm.ToString("N3"));
+                        // вывести элементы коллекции в одну строку
+                        Console.WriteLine(averageUsingStaticForm.ToString("N3"));
+                        Console.WriteLine(averageUsingInstanceForm.ToString("N3"));
 
-                Console.WriteLine(arr.Select(x => (x).ToString()).Aggregate((x,y) => x + " " + y));
+                        Console.WriteLine(arr.Select(x => (x).ToString()).Aggregate((x, y) => x + " " + y));
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        Console.WriteLine("InvalidOperationException");
+                    }
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("OverflowException");
+                }
             }
-            catch (InvalidOperationException)
-            {
-                Console.WriteLine("InvalidOperationException");
-            }
-          
         }
         
     }
