@@ -29,10 +29,13 @@ using System.Linq;
  */
 namespace Task02
 {
+
     class Program
     {
         static void Main(string[] args)
         {
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
             RunTesk02();
         }
 

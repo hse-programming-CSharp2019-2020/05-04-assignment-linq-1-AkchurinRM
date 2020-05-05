@@ -38,6 +38,7 @@ namespace Task01
 
         static void Main(string[] args)
         {
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("ru-RU");
             RunTesk01();
         }
 
