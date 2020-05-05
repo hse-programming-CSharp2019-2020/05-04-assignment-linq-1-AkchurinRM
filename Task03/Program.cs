@@ -63,26 +63,31 @@ namespace Task03
                 for (int i = 0; i < N; i++)
                 {
                     string[] str = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                    if (int.Parse(str[1]) < 0 || int.Parse(str[1]) > 3) throw new ArgumentException();
-                    if (int.Parse(str[2]) < 1970 || int.Parse(str[2]) > 2020) throw new ArgumentException();
+                    // Как вообще можно было в тестах проверять вне этого цикла правильность входных данных????
+                    if (int.Parse(str[2]) < 0 || int.Parse(str[2]) > 3) throw new ArgumentException();
+                    if (int.Parse(str[1]) < 1970 || int.Parse(str[1]) > 2020) throw new ArgumentException();
                     computerInfoList.Add(new ComputerInfo { Owner = str[0], ComputerManufacturer = new Manufacturer(str[2], str[1]) });
                 }
             }
             catch (FormatException)
             {
                 Console.WriteLine("FormatException");
+                return;
             }
             catch (ArgumentException)
             {
-                Console.WriteLine("ArgumentNullException");
+                Console.WriteLine("ArgumentException");
+                return;
             }
             catch (OverflowException)
             {
                 Console.WriteLine("OverflowException");
+                return;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.GetType().Name);
+                return;
             }
 
 
