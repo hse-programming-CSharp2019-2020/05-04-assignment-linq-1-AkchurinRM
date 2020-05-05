@@ -41,37 +41,51 @@ namespace Task04
         public static void RunTesk04()
         {
             int[] arr = null;
-
-            try
+            checked
             {
-                arr = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToArray();
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("FormatException");
-            }
-            catch (OverflowException)
-            {
-                Console.WriteLine("OverflowException");
-            }
-            catch (InvalidOperationException)
-            {
-                Console.WriteLine("InvalidOperationException");
-            }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("ArgumentException");
-            }
+                try
+                {
+                    try
+                    {
+                        arr = Console.ReadLine().Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(x => int.Parse(x)).ToArray();
+                    }
+                    catch (FormatException)
+                    {
+                        Console.WriteLine("FormatException");
+                        return;
+                    }
+                    catch (OverflowException)
+                    {
+                        Console.WriteLine("OverflowException");
+                        return;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        Console.WriteLine("InvalidOperationException");
+                        return;
+                    }
+                    catch (ArgumentException)
+                    {
+                        Console.WriteLine("ArgumentException");
+                        return;
+                    }
 
-            // использовать синтаксис методов! SQL-подобные запросы не писать!
+                    // использовать синтаксис методов! SQL-подобные запросы не писать!
 
-            int i = 1;
-            int arrAggregate = 5 + arr.Aggregate((x,y) => x + y * (int)Math.Pow(-1, i++));
+                    int i = 1;
+                    int arrAggregate = 5 + arr.Aggregate((x, y) => x + y * (int)Math.Pow(-1, i++));
 
-            int arrMyAggregate = MyClass.MyAggregate(arr);
+                    int arrMyAggregate = MyClass.MyAggregate(arr);
 
-            Console.WriteLine(arrAggregate);
-            Console.WriteLine(arrMyAggregate);
+                    Console.WriteLine(arrAggregate);
+                    Console.WriteLine(arrMyAggregate);
+                }
+                catch (OverflowException)
+                {
+                    Console.WriteLine("OverflowException");
+
+                }
+            }
            
         }
     }
